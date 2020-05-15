@@ -23,6 +23,10 @@ namespace Delegates
         //}
         public delegate string GetTextDelegate(string name);
 
+        public delegate double GetResultDelegate(double a, double b);
+
+        
+
         static void Main(string[] args)
         {
             // Creating an anonymous method or inline delegate
@@ -30,7 +34,28 @@ namespace Delegates
             {
                 return "Hello, " + name;
             };
-            Console.WriteLine(getTextDelegate("Sophie"));
+
+            //Lambda expression
+            GetTextDelegate getHelloText = (string name) => { return "Hello, " + name; };
+
+            //Statement lambda
+            GetTextDelegate getGoodbyeText = (string name) =>
+            {
+                Console.WriteLine("I'm inside of a statement lambda");
+                return "Goodbye, " + name;
+            };
+
+            GetTextDelegate getWelcomeText = name => "Welcome, " + name;
+
+            GetResultDelegate getSum = (a, b) => a + b;
+
+            GetResultDelegate getProductDelegate = (a, b) => a * b;
+
+            DisplayNum(getSum);
+
+            DisplayNum1(getProductDelegate);
+
+            Console.WriteLine(getWelcomeText("Sophie"));
             Display(getTextDelegate);
 
             //PerformCalculation getSum = Addition;
@@ -43,9 +68,17 @@ namespace Delegates
             //multiCalc -= getSum;
             //multiCalc(3.2, 3.2);
 
-
-
         }
+        static void DisplayNum1(GetResultDelegate getProductDelegate)
+        {
+            Console.WriteLine(getProductDelegate(3.0,2.0));
+        }
+
+        static void DisplayNum(GetResultDelegate getResultDelegate)
+        {
+            Console.WriteLine(getResultDelegate(3.5,2.5));
+        }
+
         static void Display(GetTextDelegate getTextDelegate)
         {
             Console.WriteLine(getTextDelegate("World"));
